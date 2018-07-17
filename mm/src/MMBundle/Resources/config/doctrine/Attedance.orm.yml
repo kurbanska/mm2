@@ -1,0 +1,23 @@
+MMBundle\Entity\Attedance:
+    type: entity
+    table: null
+    repositoryClass: MMBundle\Repository\AttedanceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        data:
+            type: date
+        hourentry:
+            type: time
+        hourexit:
+            type: time
+        worktime:
+            type: float
+        comments:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

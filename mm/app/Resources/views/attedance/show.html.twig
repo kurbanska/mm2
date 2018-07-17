@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Attedance</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ attedance.id }}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{% if attedance.data %}{{ attedance.data|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Hourentry</th>
+                <td>{% if attedance.hourentry %}{{ attedance.hourentry|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Hourexit</th>
+                <td>{% if attedance.hourexit %}{{ attedance.hourexit|date('H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Worktime</th>
+                <td>{{ attedance.worktime }}</td>
+            </tr>
+            <tr>
+                <th>Comments</th>
+                <td>{{ attedance.comments }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('attedance_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('attedance_edit', { 'id': attedance.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
