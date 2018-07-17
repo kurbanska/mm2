@@ -1,0 +1,35 @@
+MMBundle\Entity\PurchaseInvoice:
+    type: entity
+    table: null
+    repositoryClass: MMBundle\Repository\PurchaseInvoiceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        contractorId:
+            type: integer
+            column: contractor_id
+        taxId:
+            type: integer
+            column: tax_id
+        number:
+            type: string
+            length: 255
+        amountNetto:
+            type: float
+            column: amount_netto
+        amountNettoCurrency:
+            type: float
+            column: amount_netto_currency
+        currency:
+            type: string
+            length: 255
+        amountBrutto:
+            type: float
+            column: amount_brutto
+        data:
+            type: date
+    lifecycleCallbacks: {  }
