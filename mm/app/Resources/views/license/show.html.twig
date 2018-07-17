@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>License</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ license.id }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ license.number }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ license.name }}</td>
+            </tr>
+            <tr>
+                <th>Serialkey</th>
+                <td>{{ license.serialkey }}</td>
+            </tr>
+            <tr>
+                <th>Datepurchase</th>
+                <td>{% if license.datepurchase %}{{ license.datepurchase|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Datesupport</th>
+                <td>{% if license.datesupport %}{{ license.datesupport|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Validity</th>
+                <td>{% if license.validity %}{{ license.validity|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Technicalcondition</th>
+                <td>{{ license.technicalcondition }}</td>
+            </tr>
+            <tr>
+                <th>Comments</th>
+                <td>{{ license.comments }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('license_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('license_edit', { 'id': license.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

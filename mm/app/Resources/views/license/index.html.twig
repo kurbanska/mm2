@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Licenses list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Serialkey</th>
+                <th>Datepurchase</th>
+                <th>Datesupport</th>
+                <th>Validity</th>
+                <th>Technicalcondition</th>
+                <th>Comments</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for license in licenses %}
+            <tr>
+                <td><a href="{{ path('license_show', { 'id': license.id }) }}">{{ license.id }}</a></td>
+                <td>{{ license.number }}</td>
+                <td>{{ license.name }}</td>
+                <td>{{ license.serialkey }}</td>
+                <td>{% if license.datepurchase %}{{ license.datepurchase|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if license.datesupport %}{{ license.datesupport|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if license.validity %}{{ license.validity|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ license.technicalcondition }}</td>
+                <td>{{ license.comments }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('license_show', { 'id': license.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('license_edit', { 'id': license.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('license_new') }}">Create a new license</a>
+        </li>
+    </ul>
+{% endblock %}
