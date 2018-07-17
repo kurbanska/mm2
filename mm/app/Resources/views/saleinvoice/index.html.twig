@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Saleinvoices list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Contractorid</th>
+                <th>Taxid</th>
+                <th>Number</th>
+                <th>Amountnetto</th>
+                <th>Amountnettocurrency</th>
+                <th>Currency</th>
+                <th>Amountbrutto</th>
+                <th>Data</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for saleInvoice in saleInvoices %}
+            <tr>
+                <td><a href="{{ path('saleinvoice_show', { 'id': saleInvoice.id }) }}">{{ saleInvoice.id }}</a></td>
+                <td>{{ saleInvoice.contractorId }}</td>
+                <td>{{ saleInvoice.taxId }}</td>
+                <td>{{ saleInvoice.number }}</td>
+                <td>{{ saleInvoice.amountNetto }}</td>
+                <td>{{ saleInvoice.amountNettoCurrency }}</td>
+                <td>{{ saleInvoice.currency }}</td>
+                <td>{{ saleInvoice.amountBrutto }}</td>
+                <td>{% if saleInvoice.data %}{{ saleInvoice.data|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('saleinvoice_show', { 'id': saleInvoice.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('saleinvoice_edit', { 'id': saleInvoice.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('saleinvoice_new') }}">Create a new saleInvoice</a>
+        </li>
+    </ul>
+{% endblock %}
