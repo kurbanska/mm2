@@ -1,0 +1,32 @@
+MMBundle\Entity\Equimpment:
+    type: entity
+    table: null
+    repositoryClass: MMBundle\Repository\EquimpmentRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        number:
+            type: integer
+        name:
+            type: string
+            length: 255
+        serialnumber:
+            type: string
+            length: 255
+        datepurchase:
+            type: date
+        warranty:
+            type: date
+        amountnetto:
+            type: float
+        who:
+            type: string
+            length: 255
+        comments:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Equimpments list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Serialnumber</th>
+                <th>Datepurchase</th>
+                <th>Warranty</th>
+                <th>Amountnetto</th>
+                <th>Who</th>
+                <th>Comments</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for equimpment in equimpments %}
+            <tr>
+                <td><a href="{{ path('equimpment_show', { 'id': equimpment.id }) }}">{{ equimpment.id }}</a></td>
+                <td>{{ equimpment.number }}</td>
+                <td>{{ equimpment.name }}</td>
+                <td>{{ equimpment.serialnumber }}</td>
+                <td>{% if equimpment.datepurchase %}{{ equimpment.datepurchase|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if equimpment.warranty %}{{ equimpment.warranty|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ equimpment.amountnetto }}</td>
+                <td>{{ equimpment.who }}</td>
+                <td>{{ equimpment.comments }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('equimpment_show', { 'id': equimpment.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('equimpment_edit', { 'id': equimpment.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('equimpment_new') }}">Create a new equimpment</a>
+        </li>
+    </ul>
+{% endblock %}

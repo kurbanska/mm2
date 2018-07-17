@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Equimpment</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ equimpment.id }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ equimpment.number }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ equimpment.name }}</td>
+            </tr>
+            <tr>
+                <th>Serialnumber</th>
+                <td>{{ equimpment.serialnumber }}</td>
+            </tr>
+            <tr>
+                <th>Datepurchase</th>
+                <td>{% if equimpment.datepurchase %}{{ equimpment.datepurchase|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Warranty</th>
+                <td>{% if equimpment.warranty %}{{ equimpment.warranty|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Amountnetto</th>
+                <td>{{ equimpment.amountnetto }}</td>
+            </tr>
+            <tr>
+                <th>Who</th>
+                <td>{{ equimpment.who }}</td>
+            </tr>
+            <tr>
+                <th>Comments</th>
+                <td>{{ equimpment.comments }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('equimpment_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('equimpment_edit', { 'id': equimpment.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
