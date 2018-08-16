@@ -5,7 +5,11 @@ namespace MMBundle\Controller;
 use MMBundle\Entity\License;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use MMBundle\Form\LicenseSearchType;
+use MMBundle\Form\LicenseFilterType;
+use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 
 /**
  * License controller.
@@ -14,20 +18,81 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  */
 class LicenseController extends Controller
 {
+
     /**
-     * Lists all license entities.
+     * Lists all License entities.
      *
      * @Route("/", name="license_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+
+    public function indexAction(Request $request)
     {
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_PRACOWNIK')) {
+            throw new \LogicException('This code should not be reached!');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
-        $licenses = $em->getRepository('MMBundle:License')->findAll();
+        $form = $this->createForm(new LicenseSearchType());
+        $form->handleRequest($request);
+
+        $formfilter = $this->createForm(new LicenseFilterType());
+        $formfilter->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $licenses = $em->getRepository('MMBundle:License')->search($form);
+
+            return $this->render('license/index.html.twig', array(
+                'licenses' => $licenses,
+                'formfilter' => $formfilter->createView(),
+                'form' => $form->createView(),
+            ));
+
+
+        }
+
+
+
+
+
+        if ($formfilter->isSubmitted() && $formfilter->isValid()) {
+            $license = $em->getRepository('MMBundle:License')->filter($formfilter);
+
+
+            $paginator = $this->get('knp_paginator');
+
+            $licenses = $paginator->paginate(
+                $license, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                10
+            );
+
+
+            return $this->render('License/index.html.twig', array(
+                'licenses' => $licenses,
+                'formfilter' => $formfilter->createView(),
+                'form' => $form->createView()
+            ));
+        }
+
+
+        $dql   = "SELECT a FROM MMBundle:License a";
+        $query = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+
+        $licenses = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10
+        );
 
         return $this->render('license/index.html.twig', array(
             'licenses' => $licenses,
+            'form' => $form->createView(),
+            'formfilter' => $formfilter->createView(),
         ));
     }
 
