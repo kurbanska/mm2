@@ -1,39 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Contractors list</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+
+<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+<a href="index.html.twig" class="btn btn-secondary" >Wróć</a>
+<br><br>
+<h1>Kontrahenci</h1>
+<br>
+
+
+<!-- DANE-->
+<a class="btn btn-dark" data-toggle="collapse" href="#lista"  aria-controls="lista">
+    Pokaż listę kontrahentów
+</a>
+<a href="{{ path('saleinvoice_new') }}" class="btn btn-dark">
+    Dodaj kontrahenta
+</a>
+
+
+
+<div class="collapse" id="lista">
+    <div class="card card-body">
+        <table class="table">
+            <thead>
+            <th class="table-active"><h6><strong>ID</strong></h6></th>
+            <th class="table-active"><h6><strong>Nazwa</strong></h6></th>
+            <th class="table-active"></th>
         {% for contractor in contractors %}
             <tr>
                 <td><a href="{{ path('contractor_show', { 'id': contractor.id }) }}">{{ contractor.id }}</a></td>
                 <td>{{ contractor.name }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('contractor_show', { 'id': contractor.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('contractor_edit', { 'id': contractor.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('contractor_show', { 'id': contractor.id }) }}" class="btn btn-outline-dark">Szczegóły</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('contractor_new') }}">Create a new contractor</a>
-        </li>
-    </ul>
+    </div>
+</div>
 {% endblock %}

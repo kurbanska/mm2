@@ -1,32 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Contractor</h1>
+<h1>Szczegóły</h1>
 
-    <table>
-        <tbody>
+<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+<a href="{{ path('contractor_index') }}" class="btn btn-outline-dark">Wróć</a>
+
+<table>
+    <tbody>
+    <div class="collapse" id="lista">
+        <div class="card card-body">
+            <table class="table">
+                <thead>
+                <th class="table-active"><h6><strong>ID</strong></h6></th>
+                <th class="table-active"><h6><strong>Nazwa</strong></h6></th>
+                <th class="table-active"></th>
+                <th class="table-active"></th>
+
+            </tr>
+                </thead>
+
             <tr>
-                <th>Id</th>
                 <td>{{ contractor.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
                 <td>{{ contractor.name }}</td>
+                <td><a href="{{ path('contractor_edit', { 'id': contractor.id }) }}" class="btn btn-outline-dark">Edytuj</a></td>
+                <td>            {{ form_start(delete_form) }}
+                    <input type="submit" class="btn btn-outline-dark" value="Delete">
+                    {{ form_end(delete_form) }}</td>
             </tr>
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('contractor_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('contractor_edit', { 'id': contractor.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            </table>
+        </div>
+    </div>
+    </tbody>
+</table>
 {% endblock %}
