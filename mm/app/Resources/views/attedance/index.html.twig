@@ -1,18 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Attedances list</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Data</th>
-                <th>Hourentry</th>
-                <th>Hourexit</th>
-                <th>Worktime</th>
-                <th>Comments</th>
-                <th>Actions</th>
+
+<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+<a href="index.html.twig" class="btn btn-secondary" >Wróć</a>
+<br><br>
+<h1>Lista obecności</h1>
+<br>
+
+
+<!-- DANE-->
+<a class="btn btn-dark" data-toggle="collapse" href="#lista"  aria-controls="lista">
+    Pokaż listę obecności
+</a>
+<a href="{{ path('attedance_new') }}" class="btn btn-dark">
+    Dodaj obecność
+</a>
+
+
+
+<div class="collapse" id="lista">
+    <div class="card card-body">
+        <table class="table">
+            <thead>
+            <th class="table-active"><h6><strong>ID</strong></h6></th>
+            <th class="table-active"><h6><strong>Data</strong></h6></th>
+            <th class="table-active"><h6><strong>Godzina wejścia</strong></h6></th>
+            <th class="table-active"><h6><strong>Godzina wyjścia</strong></h6></th>
+            <th class="table-active"><h6><strong>Czas pracy</strong></h6></th>
+            <th class="table-active"><h6><strong>Opis</strong></h6></th>
+            <th class="table-active"></th>
             </tr>
         </thead>
         <tbody>
@@ -24,24 +42,11 @@
                 <td>{% if attedance.hourexit %}{{ attedance.hourexit|date('H:i:s') }}{% endif %}</td>
                 <td>{{ attedance.worktime }}</td>
                 <td>{{ attedance.comments }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('attedance_show', { 'id': attedance.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('attedance_edit', { 'id': attedance.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('attedance_show', { 'id': attedance.id }) }}" class="btn btn-outline-dark">Szczegóły</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('attedance_new') }}">Create a new attedance</a>
-        </li>
-    </ul>
+    </div>
+</div>
 {% endblock %}

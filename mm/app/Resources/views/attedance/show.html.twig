@@ -1,48 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Attedance</h1>
+<h1>Szczegóły</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ attedance.id }}</td>
-            </tr>
-            <tr>
-                <th>Data</th>
-                <td>{% if attedance.data %}{{ attedance.data|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Hourentry</th>
-                <td>{% if attedance.hourentry %}{{ attedance.hourentry|date('H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Hourexit</th>
-                <td>{% if attedance.hourexit %}{{ attedance.hourexit|date('H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Worktime</th>
-                <td>{{ attedance.worktime }}</td>
-            </tr>
-            <tr>
-                <th>Comments</th>
-                <td>{{ attedance.comments }}</td>
-            </tr>
-        </tbody>
-    </table>
+<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+<a href="{{ path('attedance_index') }}" class="btn btn-outline-dark">Wróć</a>
 
-    <ul>
-        <li>
-            <a href="{{ path('attedance_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('attedance_edit', { 'id': attedance.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+<table>
+    <tbody>
+    <div class="collapse" id="lista">
+        <div class="card card-body">
+            <table class="table">
+                <thead>
+                <th class="table-active"><h6><strong>ID</strong></h6></th>
+                <th class="table-active"><h6><strong>Data</strong></h6></th>
+                <th class="table-active"><h6><strong>Godzina wejścia</strong></h6></th>
+                <th class="table-active"><h6><strong>Godzina wyjścia</strong></h6></th>
+                <th class="table-active"><h6><strong>Czas pracy</strong></h6></th>
+                <th class="table-active"><h6><strong>Opis</strong></h6></th>
+                <th class="table-active"></th>
+                <th class="table-active"></th>
+                </thead>
+                <tr>
+                    <td><a href="{{ path('attedance_show', { 'id': attedance.id }) }}">{{ attedance.id }}</a></td>
+                    <td>{% if attedance.data %}{{ attedance.data|date('Y-m-d') }}{% endif %}</td>
+                    <td>{% if attedance.hourentry %}{{ attedance.hourentry|date('H:i:s') }}{% endif %}</td>
+                    <td>{% if attedance.hourexit %}{{ attedance.hourexit|date('H:i:s') }}{% endif %}</td>
+                    <td>{{ attedance.worktime }}</td>
+                    <td>{{ attedance.comments }}</td>
+                    <td><a href="{{ path('attedance_edit', { 'id': attedance.id }) }}" class="btn btn-outline-dark">Edytuj</a></td>
+                    <td>            {{ form_start(delete_form) }}
+                        <input type="submit" class="btn btn-outline-dark" value="Delete">
+                        {{ form_end(delete_form) }}</td>
+                </tr>
+
 {% endblock %}
