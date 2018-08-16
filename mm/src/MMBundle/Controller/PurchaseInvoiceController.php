@@ -5,7 +5,15 @@ namespace MMBundle\Controller;
 use MMBundle\Entity\PurchaseInvoice;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use MMBundle\Form\PurchaseInvoiceSearchType;
+use MMBundle\Form\PurchaseInvoiceFilterType;
+use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
+use MMBundle\Form\PurchaseInvoiceType;
+
+
+
 
 /**
  * Purchaseinvoice controller.
@@ -15,19 +23,78 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 class PurchaseInvoiceController extends Controller
 {
     /**
-     * Lists all purchaseInvoice entities.
+     * Lists all PurchaseInvoice entities.
      *
      * @Route("/", name="purchaseinvoice_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_PRACOWNIK')) {
+            throw new \LogicException('This code should not be reached!');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
-        $purchaseInvoices = $em->getRepository('MMBundle:PurchaseInvoice')->findAll();
+        $form = $this->createForm(new PurchaseInvoiceSearchType());
+        $form->handleRequest($request);
+
+        $formfilter = $this->createForm(new PurchaseInvoiceFilterType());
+        $formfilter->handleRequest($request);
+
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $purchaseInvoices = $em->getRepository('MMBundle:PurchaseInvoice')->search($form);
+
+            return $this->render('purchaseinvoice/index.html.twig', array(
+                'purchaseInvoices' => $purchaseInvoices,
+                'formfilter' => $formfilter->createView(),
+                'form' => $form->createView(),
+            ));
+
+
+        }
+
+
+
+
+
+        if ($formfilter->isSubmitted() && $formfilter->isValid()) {
+            $purchaseInvoice = $em->getRepository('MMBundle:PurchaseInvoice')->filter($formfilter);
+
+
+            $paginator = $this->get('knp_paginator');
+
+            $purchaseInvoice = $paginator->paginate(
+                $purchaseInvoice, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                10
+            );
+
+
+            return $this->render('PurchaseInvoice/index.html.twig', array(
+                'purchaseInvoices' => $purchaseInvoice,
+                'formfilter' => $formfilter->createView(),
+                'form' => $form->createView()
+            ));
+        }
+
+
+        $dql   = "SELECT a FROM MMBundle:PurchaseInvoice a";
+        $query = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+
+        $purchaseInvoices = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10
+        );
 
         return $this->render('purchaseinvoice/index.html.twig', array(
             'purchaseInvoices' => $purchaseInvoices,
+            'form' => $form->createView(),
+            'formfilter' => $formfilter->createView(),
         ));
     }
 
