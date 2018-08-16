@@ -1,60 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Saleinvoice</h1>
+    <h1>Szczegóły</h1>
+
+    <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+    <a href="{{ path('saleinvoice_index') }}" class="btn btn-outline-dark">Wróć</a>
 
     <table>
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ saleInvoice.id }}</td>
-            </tr>
-            <tr>
-                <th>Contractorid</th>
-                <td>{{ saleInvoice.contractorId }}</td>
-            </tr>
-            <tr>
-                <th>Taxid</th>
-                <td>{{ saleInvoice.taxId }}</td>
-            </tr>
-            <tr>
-                <th>Number</th>
-                <td>{{ saleInvoice.number }}</td>
-            </tr>
-            <tr>
-                <th>Amountnetto</th>
-                <td>{{ saleInvoice.amountNetto }}</td>
-            </tr>
-            <tr>
-                <th>Amountnettocurrency</th>
-                <td>{{ saleInvoice.amountNettoCurrency }}</td>
-            </tr>
-            <tr>
-                <th>Currency</th>
-                <td>{{ saleInvoice.currency }}</td>
-            </tr>
-            <tr>
-                <th>Amountbrutto</th>
-                <td>{{ saleInvoice.amountBrutto }}</td>
-            </tr>
-            <tr>
-                <th>Data</th>
-                <td>{% if saleInvoice.data %}{{ saleInvoice.data|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-        </tbody>
+        <div class="collapse" id="lista">
+            <div class="card card-body">
+                <table class="table">
+                    <thead>
+                    <th class="table-active"><h6><strong>Numer faktury</strong></h6></th>
+                    <th class="table-active"><h6><strong>Kontrahent</strong></h6></th>
+                    <th class="table-active"><h6><strong>Data</strong></h6></th>
+                    <th class="table-active"><h6><strong>ID tax</strong></h6></th>
+                    <th class="table-active"><h6><strong>Kwota netto</strong></h6></th>
+                    <th class="table-active"><h6><strong>Kwota netto w walucie</strong></h6></th>
+                    <th class="table-active"><h6><strong>Waluta</strong></h6></th>
+                    <th class="table-active"><h6><strong>Kwota brutto</strong></h6></th>
+                    <th class="table-active"></th>
+                    <th class="table-active"></th>
+
+                    </tr>
+                    <tr>
+                        <td>{{ saleInvoice.number }}</td>
+                        <td>{{ saleInvoice.contractorId }}</td>
+                        <td>{% if saleInvoice.data %}{{ saleInvoice.data|date('Y-m-d') }}{% endif %}</td>
+                        <td>{{ saleInvoice.taxId }}</td>
+                        <td>{{ saleInvoice.amountNetto }}</td>
+                        <td>{{ saleInvoice.amountNettoCurrency }}</td>
+                        <td>{{ saleInvoice.currency }}</td>
+                        <td>{{ saleInvoice.amountBrutto }}</td>
+                        <td><a href="{{ path('saleinvoice_edit', { 'id': saleInvoice.id }) }}" class="btn btn-outline-dark">Edytuj</a></td>
+                        <td>            {{ form_start(delete_form) }}
+                            <input type="submit" class="btn btn-outline-dark" value="Delete">
+                             {{ form_end(delete_form) }}</td>
+                    </tr>
+                    </thead>
+                </table>
+
+            </div>
+        </div>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('saleinvoice_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('saleinvoice_edit', { 'id': saleInvoice.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
+
+</tbody>
+
+
+
+
+
 {% endblock %}
