@@ -1,60 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>License</h1>
+<h1>Szczegóły</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ license.id }}</td>
-            </tr>
-            <tr>
-                <th>Number</th>
-                <td>{{ license.number }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ license.name }}</td>
-            </tr>
-            <tr>
-                <th>Serialkey</th>
-                <td>{{ license.serialkey }}</td>
-            </tr>
-            <tr>
-                <th>Datepurchase</th>
-                <td>{% if license.datepurchase %}{{ license.datepurchase|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Datesupport</th>
-                <td>{% if license.datesupport %}{{ license.datesupport|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Validity</th>
-                <td>{% if license.validity %}{{ license.validity|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Technicalcondition</th>
-                <td>{{ license.technicalcondition }}</td>
-            </tr>
-            <tr>
-                <th>Comments</th>
-                <td>{{ license.comments }}</td>
-            </tr>
-        </tbody>
-    </table>
+<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+<a href="{{ path('license_index') }}" class="btn btn-outline-dark">Wróć</a>
 
-    <ul>
-        <li>
-            <a href="{{ path('license_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('license_edit', { 'id': license.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
-{% endblock %}
+<table>
+    <tbody>
+    <div class="collapse" id="lista">
+        <div class="card card-body">
+            <table class="table">
+                <thead>
+                <th class="table-active"><h6><strong>ID</strong></h6></th>
+                <th class="table-active"><h6><strong>Numer inwentarzowy</strong></h6></th>
+                <th class="table-active"><h6><strong>Nazwa</strong></h6></th>
+                <th class="table-active"><h6><strong>Klucz seryjny</strong></h6></th>
+                <th class="table-active"><h6><strong>Data zakupu</strong></h6></th>
+                <th class="table-active"><h6><strong>Wsparcie techniczne ważne do</strong></h6></th>
+                <th class="table-active"><h6><strong>Licencja ważna do</strong></h6></th>
+                <th class="table-active"><h6><strong>Stan</strong></h6></th>
+                <th class="table-active"><h6><strong>Opis</strong></h6></th>
+                <th class="table-active"></th>
+                <th class="table-active"></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td><a href="{{ path('license_show', { 'id': license.id }) }}">{{ license.id }}</a></td>
+                        <td>{{ license.number }}</td>
+                        <td>{{ license.name }}</td>
+                        <td>{{ license.serialkey }}</td>
+                        <td>{% if license.datepurchase %}{{ license.datepurchase|date('Y-m-d') }}{% endif %}</td>
+                        <td>{% if license.datesupport %}{{ license.datesupport|date('Y-m-d') }}{% endif %}</td>
+                        <td>{% if license.validity %}{{ license.validity|date('Y-m-d') }}{% endif %}</td>
+                        <td>{{ license.technicalcondition }}</td>
+                        <td>{{ license.comments }}</td>
+                        <td><a href="{{ path('license_edit', { 'id': license.id }) }}" class="btn btn-outline-dark">Edytuj</a></td>
+                        <td>            {{ form_start(delete_form) }}
+                            <input type="submit" class="btn btn-outline-dark" value="Delete">
+                            {{ form_end(delete_form) }}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </tbody>
+
+
+    {% endblock %}

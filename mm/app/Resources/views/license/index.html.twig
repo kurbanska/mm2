@@ -1,21 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Licenses list</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Number</th>
-                <th>Name</th>
-                <th>Serialkey</th>
-                <th>Datepurchase</th>
-                <th>Datesupport</th>
-                <th>Validity</th>
-                <th>Technicalcondition</th>
-                <th>Comments</th>
-                <th>Actions</th>
+
+    <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+    <a href="index.html.twig" class="btn btn-secondary" >Wróć</a>
+    <br><br>
+    <h1>Licencje</h1>
+    <br>
+
+
+    <!-- DANE-->
+    <a class="btn btn-dark" data-toggle="collapse" href="#lista"  aria-controls="lista">
+        Pokaż listę licencji
+    </a>
+    <a href="{{ path('saleinvoice_new') }}" class="btn btn-dark">
+        Dodaj licencje
+    </a>
+
+
+
+    <div class="collapse" id="lista">
+        <div class="card card-body">
+            <table class="table">
+                <thead>
+                <th class="table-active"><h6><strong>ID</strong></h6></th>
+                <th class="table-active"><h6><strong>Numer inwentarzowy</strong></h6></th>
+                <th class="table-active"><h6><strong>Nazwa</strong></h6></th>
+                <th class="table-active"><h6><strong>Klucz seryjny</strong></h6></th>
+                <th class="table-active"><h6><strong>Data zakupu</strong></h6></th>
+                <th class="table-active"><h6><strong>Wsparcie techniczne ważne do</strong></h6></th>
+                <th class="table-active"><h6><strong>Licencja ważna do</strong></h6></th>
+                <th class="table-active"><h6><strong>Stan</strong></h6></th>
+                <th class="table-active"><h6><strong>Opis</strong></h6></th>
+                <th class="table-active"></th>
             </tr>
         </thead>
         <tbody>
@@ -30,24 +48,14 @@
                 <td>{% if license.validity %}{{ license.validity|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ license.technicalcondition }}</td>
                 <td>{{ license.comments }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('license_show', { 'id': license.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('license_edit', { 'id': license.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('license_show', { 'id': license.id }) }}" class="btn btn-outline-dark">Szczegóły</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+        </div>
+    </div>
+    </tbody>
 
-    <ul>
-        <li>
-            <a href="{{ path('license_new') }}">Create a new license</a>
-        </li>
-    </ul>
+
 {% endblock %}
