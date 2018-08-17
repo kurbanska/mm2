@@ -5,7 +5,10 @@ namespace MMBundle\Controller;
 use MMBundle\Entity\Equimpment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use MMBundle\Form\EquimpmentSearchType;
+use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 
 /**
  * Equimpment controller.
@@ -18,18 +21,51 @@ class EquimpmentController extends Controller
      * Lists all equimpment entities.
      *
      * @Route("/", name="equimpment_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_PRACOWNIK')) {
+            throw new \LogicException('This code should not be reached!');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
-        $equimpments = $em->getRepository('MMBundle:Equimpment')->findAll();
+        $form = $this->createForm(new EquimpmentSearchType());
+        $form->handleRequest($request);
+
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $equimpment = $em->getRepository('MMBundle:Equimpment')->search($form);
+
+            return $this->render('equimpment/index.html.twig', array(
+                'equimpment' => $equimpment,
+                'form' => $form->createView(),
+            ));
+
+
+        }
+
+
+
+        $dql   = "SELECT a FROM MMBundle:Equimpment a";
+        $query = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+
+        $equimpment = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10
+        );
 
         return $this->render('equimpment/index.html.twig', array(
-            'equimpments' => $equimpments,
+            'equimpment' => $equimpment,
+            'form' => $form->createView(),
         ));
     }
+
 
     /**
      * Creates a new equimpment entity.
@@ -37,6 +73,7 @@ class EquimpmentController extends Controller
      * @Route("/new", name="equimpment_new")
      * @Method({"GET", "POST"})
      */
+
     public function newAction(Request $request)
     {
         $equimpment = new Equimpment();
