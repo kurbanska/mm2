@@ -33,7 +33,7 @@
             <th class="table-active"></th>
 
             </tr>
-        {% for equimpment in equimpments %}
+        {% for equimpment in equimpment %}
             <tr>
                 <td><a href="{{ path('equimpment_show', { 'id': equimpment.id }) }}">{{ equimpment.id }}</a></td>
                 <td>{{ equimpment.name }}</td>
@@ -49,5 +49,13 @@
     </table>
     </div>
 </div>
+
+    <div>
+        <h1>Wyszukiwarka</h1><br>
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Wyszukaj" class="btn btn-outline-dark"/>
+        {{ form_end(form) }}
+    </div>
 
 {% endblock %}

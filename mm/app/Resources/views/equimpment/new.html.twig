@@ -1,19 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Equimpment creation</h1>
+    <h1>Dodawanie sprzętu</h1>
+
+
+    <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+    <br><br>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+
+
+
+    <br><br>
+
+    <input class="btn btn-outline-success" type="submit" value="Dodaj" />
+    <a href="{{ path('saleinvoice_index') }}" class="btn btn-outline-dark">Anuluj</a>
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('equimpment_index') }}">Back to the list</a>
-        </li>
-    </ul>
-
-
 
 {% endblock %}
