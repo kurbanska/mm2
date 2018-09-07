@@ -33,6 +33,7 @@
                         <td>{{ saleInvoice.amountNettoCurrency }}</td>
                         <td>{{ saleInvoice.currency }}</td>
                         <td>{{ saleInvoice.amountBrutto }}</td>
+                        <td>{{ saleInvoice.imageFile }}</td>
                         <td><a href="{{ path('saleinvoice_edit', { 'id': saleInvoice.id }) }}" class="btn btn-outline-dark">Edytuj</a></td>
                         <td>            {{ form_start(delete_form) }}
                             <input type="submit" class="btn btn-outline-dark" value="Delete">
