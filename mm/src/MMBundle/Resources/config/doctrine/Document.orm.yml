@@ -1,0 +1,27 @@
+MMBundle\Entity\Document:
+    type: entity
+    table: null
+    repositoryClass: MMBundle\Repository\DocumentRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        date:
+            type: date
+        page:
+            type: string
+            length: 255
+        descripton:
+            type: string
+            length: 255
+
+    imageFile:
+         mapping:           product_image # required
+         filename_property: imageName     # required
+         size:              imageSize
+         mime_type:         imageMimeType
+         original_name:     imageOriginalName
+    lifecycleCallbacks: {  }
