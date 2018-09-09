@@ -1,0 +1,51 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Szczegóły</h1>
+
+    <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+    <a href="{{ path('document_index') }}" class="btn btn-outline-dark">Wróć</a>
+
+    <table>
+        <tbody>
+        <div class="collapse" id="lista">
+            <div class="card card-body">
+                <table class="table">
+                    <thead>
+                    <th class="table-active"><h6><strong>id</strong></h6></th>
+                    <th class="table-active"><h6><strong>data</strong></h6></th>
+                    <th class="table-active"><h6><strong>strony</strong></h6></th>
+                    <th class="table-active"><h6><strong>opis</strong></h6></th>
+                    <th class="table-active"><h6><strong>plik</strong></h6></th>
+                    <th class="table-active"></th>
+                    <th class="table-active"></th>
+
+                    </tr>
+                    <tr>
+                        <td>{{ document.Id }}</td>
+                        <td>{% if document.date %}{{ document.date|date('Y-m-d') }}{% endif %}</td>
+                        <td>{{ document.page }}</td>
+                        <td>{{ document.descripton }}</td>
+                        <td>{{ document.imageFile }}</td>
+                        <td><a href="{{ path('document_edit', { 'id': document.id }) }}" class="btn btn-outline-dark">Edytuj</a></td>
+                        <td>            {{ form_start(delete_form) }}
+                            <input type="submit" class="btn btn-outline-dark" value="Delete">
+                            {{ form_end(delete_form) }}</td>
+                    </tr>
+                    </thead>
+                </table>
+
+            </div>
+        </div>
+    </table>
+
+
+
+    </tbody>
+
+
+
+
+
+{% endblock %}
