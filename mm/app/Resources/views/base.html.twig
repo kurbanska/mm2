@@ -37,7 +37,7 @@
                 <a href="{{ path('contractor_index') }}">Kontrahenci</a>
             </li>
             <li>
-                <a href="#">Dokumenty</a>
+                <a href="{{ path('document_index') }}">Dokumenty</a>
             </li>
             <li>
                 <a href="{{ path('equimpment_index') }}">Sprzęt</a>
@@ -50,7 +50,11 @@
             </li>
         </ul>
     </div>
-
+    <p>
+        <a type="buton" class="btn btn-light" href="{{ path('fos_user_security_logout') }}">
+            {{ 'Wyloguj się'|trans({}, 'FOSUserBundle') }}
+        </a>
+    </p>
 
     <div id="page-content-wrapper">
         <div class="container-fluid">
